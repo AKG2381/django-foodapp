@@ -28,8 +28,10 @@ including registration, login, and logout.
 
 ### Running the Development Server
 
-Start the development server:
+1. Start the development server:
+    ```bash
     python3.11 manage.py runserver
+    ```
 
 Access the app in your web browser at [http://127.0.0.1:8000/](http://127.0.0.1:8000/).
 
