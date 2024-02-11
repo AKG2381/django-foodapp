@@ -1,16 +1,23 @@
+from django.forms.models import BaseModelForm
 from django.shortcuts import render , redirect
 from django.http import HttpResponse
 from .models import Item
 from django.template import loader
 from .forms import ItemForm
+from django.views.generic import ListView ,DetailView ,CreateView
+
+
 # Create your views here.
 
+class IndexClassView(ListView):
+    model = Item
+    template_name = 'food/index.html'
+    context = "item_list"
 
-
-def index(request):
-    item_list = Item.objects.all()
-    context = {"item_list": item_list,}
-    return render(request,'food/index.html',context=context)
+# def index(request):
+#     item_list = Item.objects.all()
+#     context = {"item_list": item_list,}
+#     return render(request,'food/index.html',context=context)
 
 # def index(request):
 #     item_list = Item.objects.all()
@@ -25,18 +32,29 @@ def items(request):
     return HttpResponse('<h1>This is an item View</h1>')
 
 
-def detail(request,item_id):
-    item = Item.objects.get(pk=item_id)
-    context = {"item": item,}
-    return render(request,'food/detail.html',context=context)
+# def detail(request,item_id):
+#     item = Item.objects.get(pk=item_id)
+#     context = {"item": item,}
+#     return render(request,'food/detail.html',context=context)
+class FoodDetailView(DetailView):
+    model = Item
+    template_name = 'food/detail.html'
 
-def create_item(request):
-    form = ItemForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('food:index')
+# def create_item(request):
+#     form = ItemForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('food:index')
+#     return render(request,'food/item_form.html',{'form':form})
+    
+class ItemCreateView(CreateView):
+    model = Item
+    fields = ['item_name','item_desc','item_price','item_image']
+    template_name = 'food/item_form.html'
+    def form_valid(self, form: BaseModelForm) -> HttpResponse:
+        form.instance.user_name = self.request.user
+        return super().form_valid(form)
 
-    return render(request,'food/item_form.html',{'form':form})
 
 def update_item(request,item_id):
     item = Item.objects.get(pk=item_id)

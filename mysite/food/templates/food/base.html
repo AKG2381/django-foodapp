@@ -13,10 +13,16 @@
     <nav class="navbar navbar-dark bg-dark">
         <a href="#" class="navbar-brand">FoodApp</a>
 
-        <div class="navbar">
+        <div class="navbar d-flex">
             <a class="nav-item nav-link text-light mx-2" href="{%url 'food:create_item'%}">Add Item</a>
             <a class="nav-item nav-link text-light mx-2" href="#">Delete Item</a>
             <a class="nav-item nav-link text-light mx-2" href="#">View Item</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'logout'%}" class="mx-2">Logout </a>
+                <a href="{% url 'profile'%}" class="mx-2">Profile</a>
+            {% else %}
+                <a href="{% url 'login'%}">Login</a>
+            {% endif %}
 
         </div>
     </nav>
