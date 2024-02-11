@@ -30,7 +30,7 @@ including registration, login, and logout.
 
 Start the development server:
 
-    ```bash
+    ```
     python3.11 manage.py runserver
     ```
 
