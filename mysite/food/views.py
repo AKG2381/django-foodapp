@@ -38,6 +38,7 @@ def items(request):
 #     item = Item.objects.get(pk=item_id)
 #     context = {"item": item,}
 #     return render(request,'food/detail.html',context=context)
+
 class FoodDetailView(DetailView):
     model = Item
     template_name = 'food/detail.html'
@@ -49,15 +50,15 @@ class FoodDetailView(DetailView):
 #         return redirect('food:index')
 #     return render(request,'food/item_form.html',{'form':form})
     
-class ItemCreateView(CreateView):
+class ItemCreateView(LoginRequiredMixin,CreateView):
     model = Item
-    fields = ['item_name','item_desc','item_price','item_image']
+    fields = ['item_name', 'item_desc', 'item_price', 'item_image']
     template_name = 'food/item_form.html'
     def form_valid(self, form: BaseModelForm) -> HttpResponse:
         form.instance.user_name = self.request.user
         return super().form_valid(form)
 
-
+@login_required
 def update_item(request,item_id):
     item = Item.objects.get(pk=item_id)
     form = ItemForm(request.POST or None,instance=item)
@@ -66,7 +67,7 @@ def update_item(request,item_id):
         return redirect('food:index')
     return render(request,'food/item_form.html',{'form':form,'item':item})
 
-
+@login_required
 def delete_item(request,item_id):
     item = Item.objects.get(pk=item_id)
     if request.method == 'POST':

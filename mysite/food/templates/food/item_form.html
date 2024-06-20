@@ -7,16 +7,27 @@
             <div class="card">
                 <div class="card-header text-white bg-info">
                     <div class="card-title">
-                        Register
+                        Add Food Item
                     </div>
                 </div>
                 <div class="card-body">
-                    {% for field in form %}
-                            <div class="form-group mb-3">
-                                {{ field.label_tag }}
-                                {{ field }}
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% for field in form %}
+                        <div class="form-group mb-3">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="text-danger">
+                                {{ field.errors }}
                             </div>
-                    {% endfor %}
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

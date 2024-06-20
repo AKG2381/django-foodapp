@@ -11,18 +11,21 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="" method="post">
+                    <form action="/register/" method="POST">
                         {% csrf_token %}
                         {% for field in form %}
-                            <div class="form-group mb-3">
-                                {{ field.label_tag }}
-                                <br>
-                                {{ field }}
+                        <div class="form-group mb-3">
+                            {{ field.label_tag }}
+                            <br>
+                            {{ field }}
+                            {% if field.errors %}
+                            <div class="alert alert-danger">
+                                {{ field.errors }}
                             </div>
+                            {% endif %}
+                        </div>
                         {% endfor %}
-                    </form>                    
-                        <!-- {{form}} -->
-                    <button class="btn btn-info " type="submit">SignUp</button>
+                        <button class="btn btn-info " type="submit">SignUp</button>
 
                     </form>
                     <h5>Already A User : <a href="{% url 'login' %}">Login </a></h5>
