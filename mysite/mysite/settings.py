@@ -123,6 +123,7 @@ LOGIN_URL = 'login'
 MEDIA_ROOT = os.path.join(BASE_DIR,'pictures')
 MEDIA_URL = '/pictures/'
 
+STATICFILES_DIRS = [BASE_DIR / "static"]
 # Add this line to configure STATIC_ROOT
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
